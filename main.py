@@ -6,7 +6,7 @@ from dash import dcc, html, Input, Output
 import plotly.express as px
 
 
-folder_path = "/dataset/"
+folder_path = "./dataset/"
 YEARS = [2016, 2017, 2018, 2019]
 
 MESES_PT = [
