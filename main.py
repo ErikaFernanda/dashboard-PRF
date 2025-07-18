@@ -55,6 +55,16 @@ def load_csvs(folder: str, years: list[int]) -> pd.DataFrame:
         )
         df["hour"] = df["horario_dt"].dt.hour
         df["minute"] = df["horario_dt"].dt.minute
+        
+        df["morto"] = pd.to_numeric(df["mortos"], errors="coerce").fillna(0)
+        df["feridos_graves"] = pd.to_numeric(
+            df["feridos_graves"], errors="coerce"
+        ).fillna(0)
+
+        df["grave"] = (
+            (df["morto"] > 0) | (df["feridos_graves"] > 0)
+        ).astype(int)
+        
         frames.append(df)
     if not frames:
         raise FileNotFoundError(
