@@ -90,7 +90,7 @@ def generate_heat_map(df_oficial):
 def generate_bar_acidentes_por_gravidade(df_oficial, ano_escolhido):
     df_filtrado = df_oficial[df_oficial["ano"] == ano_escolhido]
 
-    # Agrupa por mês e classificação do acidente
+    
     dados = (
         df_filtrado.groupby(["mes", "classificacao_acidente"])
         .size()
@@ -115,7 +115,7 @@ def generate_bar_acidentes_por_gravidade(df_oficial, ano_escolhido):
             "#1f77b4",
             "#ff7f0e",
             "#d62728",
-        ],  # azul, laranja, vermelho
+        ], 
         height=500,
         width=900,
     )
@@ -129,17 +129,14 @@ def plot_grafico_acidentes_graves_por_clima(df):
 
     df_graves = df[(df["mortos"] > 0) | (df["feridos_graves"] > 0)]
 
-    # Conta os acidentes graves por tipo de clima
     contagem = (
         df_graves["condicao_metereologica"].value_counts().sort_values(ascending=False)
     )
 
-    # Verifica se há dados
     if contagem.empty:
         st.warning("Nenhum acidente grave encontrado nos dados.")
         return
 
-    # Cria a figura
     fig, ax = plt.subplots()
     contagem.plot(kind="bar", color="darkred", edgecolor="black", ax=ax)
     ax.set_title("Acidentes Graves por Condição Climática")
@@ -148,7 +145,6 @@ def plot_grafico_acidentes_graves_por_clima(df):
     ax.set_xticklabels(ax.get_xticklabels(), rotation=45)
     plt.tight_layout()
 
-    # Exibe no Streamlit
     st.pyplot(fig)
 
 
@@ -188,7 +184,6 @@ with st.spinner("Carregando dados..."):
     geojson = requests.get(url_geojson).json()
     df_oficial = load_csvs(folder_path, YEARS)
 
-# Exibir gráficos
 st.subheader("📊 Mapa de Densidade de Acidentes por Hora e Dia da Semana")
 fig1 = generate_heat_map(df_oficial)
 st.plotly_chart(fig1, use_container_width=True)
@@ -206,13 +201,11 @@ st.plotly_chart(fig)
 
 plot_grafico_acidentes_graves_por_clima(df_oficial)
 
-# Carrega o modelo treinado
 with open("modelo_gravidade_simplificado2.pkl", "rb") as f:
     modelo = pickle.load(f)
 
 st.title("Predição de Gravidade de Acidente com IA")
 
-# Inputs do usuário
 hora = st.number_input("Hora do dia (0–23):", min_value=0, max_value=23, step=1)
 dia_semana = st.selectbox(
     "Dia da semana:",
@@ -232,7 +225,6 @@ clima = st.selectbox(
 )
 
 
-# Botão de predição
 if st.button("Prever Gravidade"):
     entrada = {
         "hour": [hora],

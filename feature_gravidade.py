@@ -8,7 +8,6 @@ from sklearn.preprocessing import OneHotEncoder
 from sklearn.metrics import classification_report
 import pickle
 
-# --- Carregando dados igual seu código ---
 
 folder_path = "./dataset/"
 anos = range(2016, 2020)
@@ -27,7 +26,6 @@ features = ["hour", "dia_semana", "condicao_metereologica"]
 X = df_all[features]
 y = df_all["grave"]
 
-# --- Undersampling manual para balancear classes ---
 
 df_balanced = pd.concat([
     df_all[df_all["grave"] == 1],
@@ -37,7 +35,6 @@ df_balanced = pd.concat([
 X_bal = df_balanced[features]
 y_bal = df_balanced["grave"]
 
-# --- Pré-processamento ---
 
 categorical_cols = ["dia_semana", "condicao_metereologica"]
 numerical_cols = ["hour"]
