@@ -1,10 +1,10 @@
 import os
-import pandas as pd
 import threading
-import dash
-from dash import dcc, html, Input, Output
-import plotly.express as px
 
+import dash
+import pandas as pd
+import plotly.express as px
+from dash import Input, Output, dcc, html
 
 folder_path = "./dataset/"
 YEARS = [2016, 2017, 2018, 2019]
@@ -44,7 +44,9 @@ def load_csvs(folder: str, years: list[int]) -> pd.DataFrame:
         df = pd.read_csv(path, sep=";", encoding="latin-1", low_memory=False)
         df["ano"] = yr
 
-        df["data"] = pd.to_datetime(df["data_inversa"], dayfirst=True, errors="coerce")
+        df["data"] = pd.to_datetime(
+            df["data_inversa"], format="%d/%m/%Y", dayfirst=True, errors="coerce"
+        )
         df["mes"] = df["data"].dt.month
         df["dia_semana"] = df["data"].dt.weekday
 
