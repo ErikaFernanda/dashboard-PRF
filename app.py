@@ -246,5 +246,6 @@ if st.button("Prever Gravidade"):
 
     st.markdown(f"### 🚨 Gravidade prevista: **{classe}**")
 st.image(
-    "./tree.png", caption="Primeira arvore da Random Florest", use_container_width=True
+    "./tree.png", caption="Primeira arvore da Random Forest", use_container_width=True
 )
+st.image("./info.png", caption="Informações do modelo", use_container_width=True)
